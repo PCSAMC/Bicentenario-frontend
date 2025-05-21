@@ -4,6 +4,7 @@ import { loginCredentials } from '../types/credentialsData.types'
 import { registerData } from '../types/registerData.types'
 import { useLogin } from '../hooks/useLogin'
 import { useRegister } from '../hooks/useRegister'
+import { PasswordRecoveryWizard } from './RenderContrasenaRecuperar'
 
 interface Props {
   initialMode?: 'login' | 'register'
@@ -17,6 +18,8 @@ function AuthForm({ initialMode = 'login' }: Props) {
   const [password, setPassword] = useState('')
   const [rememberMe, setRememberMe] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [showRecovery, setShowRecovery] = useState(false)
+
 
   const { handleLogin, loading: loginLoading, error: loginError } = useLogin()
   const { handleRegister, error: registerError } = useRegister()
@@ -207,10 +210,17 @@ function AuthForm({ initialMode = 'login' }: Props) {
           </div>
           
           {mode === 'login' && (
-            <a href="#" className="text-sm hover:text-red-700 transition-colors duration-300" style={{ color: boliviaColors.red }}>
-              ¿Olvidaste tu contraseña?
-            </a>
-          )}
+  <button
+    type="button"
+    onClick={() => setShowRecovery(true)}
+    className="text-sm hover:text-red-700 transition-colors duration-300"
+    style={{ color: boliviaColors.red }}
+  >
+    ¿Olvidaste tu contraseña?
+  </button>
+)}
+
+
         </div>
         
         {mode === 'register' && (
@@ -245,7 +255,22 @@ function AuthForm({ initialMode = 'login' }: Props) {
           }
         </p>
       </div>
+      {showRecovery && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+    <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
+      <button
+        onClick={() => setShowRecovery(false)}
+        className="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-xl font-bold"
+      >
+        &times;
+      </button>
+      <PasswordRecoveryWizard />
     </div>
+  </div>
+)}
+
+    </div>
+    
   )
 }
 

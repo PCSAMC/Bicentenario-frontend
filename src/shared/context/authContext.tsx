@@ -24,11 +24,20 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   const login = (userData: AuthUser) => {
-    // Ya no necesitamos extraer la propiedad data porque ahora manejamos eso en el hook
-    setUser(userData)
-    localStorage.setItem('user', JSON.stringify(userData))
-  }
-
+    // Guardar los datos del usuario en el estado y en localStorage
+    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    // Verificar si se guardó correctamente en el localStorage
+    const storedUser = localStorage.getItem('user');
+    console.log('Usuario autenticado:', userData);
+    console.log('Usuario guardado en localStorage:', storedUser); // Muestra lo que está guardado en el localStorage
+  
+    // Opción: Si quieres asegurarte de que es el mismo objeto
+    const parsedUser = storedUser ? JSON.parse(storedUser) : null;
+    console.log('Usuario deserializado desde localStorage:', parsedUser);
+  };
+  
   const logout = () => {
     setUser(null)
     localStorage.removeItem('user')

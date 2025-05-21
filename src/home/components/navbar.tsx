@@ -12,8 +12,11 @@ interface NavItem {
   title: string;
   submenu: SubMenuItem[];
 }
+interface NavBarProps {
+  isFixed?: boolean;
+}
 
-function NavBar() {
+function NavBar({ isFixed = false }: NavBarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -39,15 +42,18 @@ function NavBar() {
     {
       title: "Testimonios Destacados",
       submenu: [
-        { name: "Patriotas", path: "/testimonios/patriotas" },
-        { name: "Comunidades", path: "/testimonios/comunidades" },
-        { name: "Regiones", path: "/testimonios/regiones" }
+        { name: "Tipo 1", path: "/galeriaVideos/1" },
+        { name: "Tipo 2", path: "/galeriaVideos/2" },
+        { name: "Tipo 3", path: "/galeriaVideos/3" },
+        { name: "Tipo 4", path: "/galeriaVideos/4" },
+        { name: "Tipo 5", path: "/galeriaVideos/Todos" },
       ]
+      
     },
     {
-      title: "Eventos Históricos",
+      title: "Mapa Interactivo",
       submenu: [
-        { name: "Proclamaciones", path: "/eventos/proclamaciones" },
+        { name: "Mapa", path: "/MapPage" },
         { name: "Batallas", path: "/eventos/batallas" },
         { name: "Hitos Culturales", path: "/eventos/hitos-culturales" }
       ]
@@ -70,8 +76,8 @@ function NavBar() {
   };
 
   return (
-    <header className="bg-transparent hover:bg-black/20 py-4 px-6 backdrop-blur-sm fixed w-full z-50 transition-all duration-500">
-      <div className="max-w-7xl mx-auto">
+    <header className={`${isFixed ? 'fixed' : 'relative'} bg-transparent-10 hover:bg-black/20 py-4 px-6 backdrop-blur-sm w-full z-50 transition-all duration-500`}>
+<div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center space-x-2">
